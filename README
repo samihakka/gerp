@@ -1,0 +1,415 @@
+
+/**********************************************************
+* Project 4: Gerp
+* README
+* Author: Sami Hakkarainen and Sam Miller
+* Date: 12/04/2022
+*
+*********************************************************/
+
+Program Purpose:
+
+    The purpose of this program is to search through text data for case
+    senstive and case insenstive instances of a specific string and return the 
+    locations of that string within a given directory if it exists.
+    
+Compile/run: 
+
+    The program can be compiled by the following commands:
+
+    make
+    make Gerp
+    
+    The program can be ran with the following usage:
+    
+    ./Gerp <dicrectory> <output>
+
+    Then, inp
+        Query? <type of search> <string>
+    
+     
+Files: 
+    -DirNode.h
+        This was a provided file that is interface of the DirNode class. This
+        class is used to build the N-ary Tree. Also has some other funcitonals
+        that allow you to edit/inspect the tree as well. 
+
+    -exceedmem.cpp
+        Provided program to explore large memory allocations. Gives us insight
+        into hash tables, time coplexity and memery allocations
+
+    -FSTree.h
+        This was a provided file that is interface of the FSTree class. This
+        class is used to build the N-ary Tree. The tree is made up of DirNodes.
+        Also has some other funcitonals that allow you to edit/inspect the tree
+        as well.
+
+    -Gerp.cpp
+        This is our main file in our Gerp Program. This file includes many of
+        the key functions such as main, hashing, reading data, and organizing
+        that data. This file includes the main files that we made to build Gerp
+
+    -hash_test.cpp
+        A short program that demonstrates use of the STL hash facility. This 
+        program shows two ways to use the C++ STL hash facility, and also
+        illustrates I/O manipulation tools for columnar output.
+
+    -hasher.h
+        This is the interface of our hasher class. This class has three structs
+        in it. Container, Node and sentanceObjects. Node stores a key and all 
+        the instances of that key in a vector of type container. Container 
+        stores filePath and the line number of each instance. Sentence Objects
+        stores the file path of each instance and the line that an instance 
+        occurs on.
+
+    -Makefile
+        This file compiles and unit tests our program. 
+
+    -README
+        You are reading this file. This file describes how to use this program,
+        what it does and how it was built. 
+
+    -stringProcessing.cpp
+        This is the implementation of our string parcing functions. This file
+        is capable of stripping a word that is inputted by the user by the 
+        standards that is called for in the spec. In other words, this file 
+        strips words that contain chars that are non Alphanumeric. 
+
+    -stringProcessing.h
+        This is the interface of our string parcing functions. This file
+        is capable of stripping a word that is inputted by the user by the 
+        standards that is called for in the spec. In other words, this file 
+        strips words that contain chars that are non Alphanumeric. 
+
+Architecural Overview: 
+ 
+The program consists of several modules, which work together to read in text 
+data from an input stream and store it in a hash table for efficient searching.
+The main module, called "gerp.cpp", contains the main function of the
+program, which controls the overall flow of the program. The main function is
+responsible for reading in the text data from the input stream and calling the
+necessary functions to process and store the data in the hash table.
+
+The "FSTree.h" and "FSTree.cpp" modules contain the implementation of the 
+FSTree class, which is used to build a tree representation of the directory 
+structure of the input data. The main function uses this tree to recursively 
+traverse the directory and read in all of the files containing text data.
+
+The "stringProcessing.h" and "stringProcessing.cpp" modules contain the 
+implementation of the stringProcessing class, which is used to process the 
+individual words in the input data. The main function uses this class to 
+convert each word to lowercase, which allows it to be stored in a 
+case-insensitive manner in the hash table. The main function also uses this
+class to remove any punctuation from the words, which ensures that words are 
+stored and searched for in their simplest form.
+
+The "hasher.h" and "hasher.cpp" modules contain the implementation of the 
+hasher class, which is used to build and manage the hash table. The main 
+function uses this class to initialize the hash table with empty values, and 
+to add each word from the input data to the appropriate bucket in the hash 
+table. The hasher class also provides functions for searching the hash table
+for a given word, and for printing out information about where the word can be
+found in the input data.
+
+The program also includes the "hash.h" module, which provides the hash function
+that is used to determine which bucket in the hash table each word should be 
+stored in. This module uses the standard C++ hash function to generate a hash 
+value for each word, based on its lowercase value. The hasher class then uses 
+this hash value to determine which bucket the word should be stored in.
+
+Together, these modules work together to read in text data from an input 
+stream, process the data, and store it in a hash table for efficient searching.
+The main function controls the overall flow of the program, and uses the other 
+modules to perform the necessary tasks for reading, processing, and storing the
+data. The FSTree class is used to build a tree representation of the directory 
+structure of the input data, and the stringProcessing class is used to process 
+the individual words in the input data. The hasher class is used to build and 
+manage the hash table, and the hash function is used to determine which bucket 
+each word should be stored in.
+
+Data Structures: 
+
+- Trees
+
+    The DirNode class in this program is used to represent nodes in an N-ary
+    tree that represents a file system. Each DirNode instance stores a list 
+    of subdirectories and a list of filenames, as well as the name of the 
+    directory and a pointer to the parent directory. This allows the DirNode 
+    class to represent the hierarchical structure of a file system, with the 
+    root of the tree representing the root folder of the file system, and the 
+    child nodes representing subdirectories and files within that root folder.
+
+    The FSTree class uses the DirNode class to create a tree representation of 
+    a file system, and provides methods for accessing and modifying the tree. 
+    For example, the addFile and addSubDirectory methods allow for the 
+    insertion of new files and subdirectories into the tree. The getRoot 
+    method allows for traversal of the tree, allowing the user to access 
+    specific files or directories within the file system.
+
+    The FSTree class also provides a method for copying the tree, which uses 
+    a deep copy approach to create a new, independent tree with the same 
+    structure and data as the original tree. This allows the original tree to 
+    be modified or destroyed without affecting the copied tree. The FSTree 
+    class also provides a method for printing the tree in a human-readable 
+    format, which can be useful for debugging or for displaying the structure 
+    of the file system to the user.
+
+    The DirNode and FSTree classes provide a way to represent a file system 
+    as a tree, which can be useful for organizing and navigating the file 
+    system in a hierarchical manner. The tree structure allows for efficient 
+    insertion and deletion of files and subdirectories, as well as efficient 
+    traversal of the file system to access specific files or directories.
+
+- Array
+
+    In this program, arrays are used to store data that is read in from a file.
+    The program includes two arrays called dictionary and 
+    insensitive_dictionary which are used to store the data from the file in a
+    structured way. These arrays are implemented as hash tables, which means 
+    that each element in the array is associated with a "key" or index value, 
+    and the data is organized into "buckets" based on these key values.
+
+    The dictionary array is used to store data in a case-sensitive way, meaning
+    that the words "apple" and "Apple" would be stored in different buckets in 
+    this array. The insensitive_dictionary array, on the other hand, is used 
+    to store data in a case-insensitive way, so the words "apple" and "Apple" 
+    would be stored in the same bucket in this array.
+
+    The program includes a function called hash_it() which is used to organize 
+    the data from the file into the appropriate buckets in the arrays. This 
+    function takes a string, the name of the file it came from, and the line 
+    number it was found on as arguments, and uses a hash function to determine 
+    which bucket the data should be placed in. If the bucket is already 
+    occupied, the function will keep searching for an empty bucket until it 
+    finds one, or until it reaches the end of the array.
+
+    Arrays in this program are used to store and organize data from a file in 
+    a way that makes it easy to search and access later. The hash tables ensure
+    that the data is organized efficiently and that searches can be performed 
+    quickly.
+
+-Vector
+
+    Vectors are used in this program to store multiple instances of a word that
+    are found in the text data. For each word that is read in from the file, 
+    the program creates a container object that stores the name of the file it 
+    came from and the line number it was found on. This container object is 
+    then added to a vector that is associated with the word in the dictionary 
+    or insensitive_dictionary array.
+
+    The vectors are used to store the multiple instances of a word because 
+    each word may appear more than once in the text data. For example, if the
+    word "apple" appears on lines 5, 10, and 15 of a file, the program would 
+    create three separate container objects for this word, each with a 
+    different line number, and add them to the same vector in the dictionary 
+    array.
+
+    The vectors are accessed and manipulated using standard vector functions 
+    such as push_back() which adds an element to the end of the vector, and 
+    size() which returns the number of elements in the vector. The program 
+    also uses iterators to loop through the elements in a vector and access 
+    the data they contain.
+
+    The vectors in this program are used to store multiple instances of a word
+    that are found in the text data, and to provide an efficient way to access
+    and manipulate this data.
+
+- Hash
+
+    The hash is the most important data structure in this program is the hash
+    map. The hash table in this program is used to store and organize data 
+    from a file in a way that makes it easy to search and access later. The 
+    hash table is implemented as an array called dictionary which is used to 
+    store the data in a case-sensitive way, and another array called 
+    insensitive_dictionary which is used to store the data in a 
+    case-insensitive way.
+
+    Each element in the hash table array is associated with a "key" or index 
+    value which is generated using a hash function. This hash function takes 
+    a string (e.g. a word from the text data) and calculates a unique key value
+    for it. The data is then organized into "buckets" in the array based on 
+    these key values.
+
+    The hash table is used to store the data from the file in a structured 
+    way that makes it easy to search for a specific word or group of words. 
+    For example, if the program needs to find all instances of the word "apple"
+    in the text data, it can use the hash function to calculate the key value 
+    for this word and then search the appropriate bucket in the dictionary or 
+    insensitive_dictionary array for the word and its associated data.
+
+    The hash table also helps to improve the performance of searches by making 
+    it faster to find the data that is being searched for. Because the data is 
+    organized into buckets based on key values, the program can quickly 
+    determine which bucket a specific word is likely to be found in, and then 
+    search only that bucket for the word instead of the entire array. This 
+    reduces the number of comparisons that need to be made and makes the search
+    process more efficient.
+
+    The hash table in this program is used to store and organize data from a 
+    file in a way that makes it easy to search and access, and to improve the 
+    performance of searches.
+
+Testing: 
+
+    void checkMakeFile() 
+    
+    In this test file, we tested that our parser would be able to cut off non
+    alphanumeric chars on the oustide of the word "hi". It worked.
+
+    void parserTestinvalidMiddle() 
+    
+    We tested that our parser would not remove non alphanumeric chars inside 
+    of a string that is made of alphanumeric strings. It worked
+
+    void parserTestSpec()
+    
+    This test was from the spec. Very similar to the test above in that we 
+    tested that our parser would not remove non alphanumeric chars inside 
+    of a string that is made of alphanumeric strings. It worked.
+
+    void parserTestSpecInvalidOutsides() 
+    
+    This is very similar to the first test. we tested that our parser would be
+    able to cut off non alphanumic tests before and after the word comp.
+    It worked. 
+
+    void parserTestJimmy()
+
+    We tested that our parser would not chop anyting off on this test.
+    It worked.
+    
+    void testSpecParse2()
+    
+    This is another test spec. We wanted it to return Comp15 which it did. 
+    This was a great catch because we realized the '-' char needs to be 
+    included. 
+
+    void testFilePathPrint() 
+    
+    This was our first file path printing test. We successfully printed the 
+    file path with the correct '/''s which is great. The path is also correct.
+    
+    void testGettingStrings() 
+    {
+
+    openFileandRead("ultimateLink.cpp");
+}
+
+When initially testing the hash table, we built a simple function that would
+take one word as input and print the integer value to cout. We then created
+a unit test where we could run and test this function. After this got 
+going, we increased the number of words being inserted and checked if there 
+were any collisions.
+
+When filling the hash tables, it was necessary to first fill
+
+
+
+Then once the main file was created, we created a directory that has an 
+assortment of different directories within it as well as files containing 
+text. We made sure to keep these files relatively short so that we could 
+easily find errors within the program. We then ran ./the_gerp on this 
+directory, and noticed how the information was displayed. We noticed that 
+the implementation is a post order traversal through the directories,
+traveling through first and displaying the information after visitation.
+It was inmportant to know the traversal type because we could then 
+modify our program to ALSO be post order traversal. This means we 
+could then diff test our data. Sure, with 10 line text files its possible
+to use the eye test. But when we start comparing the gutenberg data, 
+it's crucial to have a solid diff testing foundation.
+
+
+
+
+./the_gerp proj4-test-dirs/smallGutenberg/ testoutput.txt
+./Gerp proj4-test-dirs/mediumGutenberg/ output2.txt
+diff output.txt output2.txt
+
+In this test, we diff tested our output versus the_gerp program. There ended up
+no differences in our program versus the provided program which is great. 
+We got these outputs with smallguttenberg. 
+
+/Gerp proj4-test-dirs/mediumGutenberg/ output2.txt
+diff output.txt output2.txt
+
+We did the same test as above to make sure that our program works in the CASE
+INSENSITIVE for mediumGutenberg. This passed so we are confident that our 
+program works for case senstive and case insenstive programs. 
+
+At this point, we have submitted our first autograder submission. We got a 2/42
+There were many glaring and obvious mistakes made. They were easy fixes. We
+were printing out the wrong message in a couple of different places and that 
+is why we were failing the diff tests.
+
+More specifically, we were printing the wrong goodbye message. We changed 
+this to "Goodbye! Thank you and have a nice day." to match the spec. 
+We alos changed our "Query?" to not have a new line and a capital Q.
+These were easy changes that we anticicate will make our score go way up. 
+
+At this point we submitted to the autograder again and got a 28/42. We still
+have some big isseues ovbiously at this point.
+
+vm-hw09{shakka01}74: ./the_gerp proj4-test-dirs/smallGutenberg/ testoutput.txt
+Query? @i inrnfeo
+Query? inrnfeo
+Query? @q
+Goodbye! Thank you and have a nice day.
+
+Above are the commmands that we put into the command line in order to make
+an insenstive search of a ord that does not exist in the file. As suspected,
+the content to the output file is different for these commands, even 
+though the same word is being looked at. The output file reads as 
+follows:
+
+inrnfeo Not Found.
+inrnfeo Not Found. Try with @insensitive or @i.
+
+There is a difference here. To counter this problem, we simply 
+created a boolean value that tracked wether we were using 
+case sensitive or not, and adjusted the output accordingly
+
+We are failing valgrind!
+
+std::string filePath = "";
+    std::string prevFilePath = "oinfoinwfoiewnfo";
+    int lineNumber = -2;
+    int prevLineNumber = -1;
+
+The following lines in FSTreeTraversal had been uninitalized so we fixed that
+and our valgrind problems went away. 
+
+We are also struggling with a stripping probelm w/ words with aposterphes.
+It's stripping everything after the aposterphe, but we need to keep what's 
+after it.
+
+We fixed this problem by creating many debug prints within our string 
+processing function. This allowed us to see what the values of our
+local variables were at different points in the process. We were simply
+stripping everything after the first instance of a non alpha character.
+To fix this, we implemented a boolean that tracks wether the loop 
+ends on an alpha character, and if it does, do not strip the string
+at all.
+
+We just made sure that our program ends at eof by feeding in a text file that
+doesn't end in "@q". When diff testing our program with the implementation, 
+(where the std output is directed to a reference file) we are getting one 
+less "query" output.
+
+We fixed the above problem by simply moving our "query" output statement 
+above the end of file check
+
+Time (hh:mm:ss or m:ss):
+0:19.57
+Reference Time (hh:mm:ss or m:ss):
+0:06.53
+Memory usage (GB):
+2.119071
+Reference Memory usage (GB):
+.539947
+output.txt contains your program output
+
+This was our last test. We made sure that our program was under 3 gigabytes of
+Ram and certainly processed the query in less than 10 minutes. We timed it by
+hand and it took 14 seconds. We are slightly confused by the units on the 
+provided speed test becuase this is saying that it takes 19 minutes but it
+only takes 19 seconds.
